@@ -64,7 +64,7 @@ function PaintWeb (win, doc) {
   /**
    * Holds all language strings used within PaintWeb.
    */
-  // Here we include a minimal set of strings, used in case the language file will 
+  // Here we include a minimal set of strings, used in case the language file will
   // not load.
   this.lang = {
     "noComputedStyle": "Error: window.getComputedStyle is not available.",
@@ -96,7 +96,7 @@ function PaintWeb (win, doc) {
    *
    * @type Object
    *
-   * @see PaintWeb.config.toolDefault holds the ID of the tool which is 
+   * @see PaintWeb.config.toolDefault holds the ID of the tool which is
    * activated when the application loads.
    * @see PaintWeb#toolActivate Activate a drawing tool by ID.
    * @see PaintWeb#toolRegister Register a new drawing tool.
@@ -114,7 +114,7 @@ function PaintWeb (win, doc) {
   this.elems = {};
 
   /**
-   * Holds the last recorded mouse coordinates and the button state (if it's 
+   * Holds the last recorded mouse coordinates and the button state (if it's
    * down or not).
    *
    * @private
@@ -128,14 +128,14 @@ function PaintWeb (win, doc) {
    * @type Object
    * @see PaintWeb#extensionRegister Register a new extension.
    * @see PaintWeb#extensionUnregister Unregister an extension.
-   * @see PaintWeb.config.extensions Holds the list of extensions to be loaded 
+   * @see PaintWeb.config.extensions Holds the list of extensions to be loaded
    * automatically when PaintWeb is initialized.
    */
   this.extensions = {};
 
   /**
-   * Holds all the PaintWeb commands. Each property in this object must 
-   * reference a simple function which can be executed by keyboard shortcuts 
+   * Holds all the PaintWeb commands. Each property in this object must
+   * reference a simple function which can be executed by keyboard shortcuts
    * and/or GUI elements.
    *
    * @type Object
@@ -189,7 +189,7 @@ function PaintWeb (win, doc) {
     height: 0,
 
     /**
-     * Image zoom level. This property holds the current image zoom level used 
+     * Image zoom level. This property holds the current image zoom level used
      * by the user for viewing the image.
      *
      * @type Number
@@ -198,8 +198,8 @@ function PaintWeb (win, doc) {
     zoom: 1,
 
     /**
-     * Image scaling. The canvas elements are scaled from CSS using this value 
-     * as the scaling factor. This value is dependant on the browser rendering 
+     * Image scaling. The canvas elements are scaled from CSS using this value
+     * as the scaling factor. This value is dependant on the browser rendering
      * resolution and on the user-defined image zoom level.
      *
      * @type Number
@@ -223,7 +223,7 @@ function PaintWeb (win, doc) {
    */
   this.resolution = {
     /**
-     * The DOM element holding information about the current browser rendering 
+     * The DOM element holding information about the current browser rendering
      * settings (zoom / DPI).
      *
      * @private
@@ -232,7 +232,7 @@ function PaintWeb (win, doc) {
     elem: null,
 
     /**
-     * The ID of the DOM element holding information about the current browser 
+     * The ID of the DOM element holding information about the current browser
      * rendering settings (zoom / DPI).
      *
      * @private
@@ -290,7 +290,7 @@ function PaintWeb (win, doc) {
     browserZoom: 1,
 
     /**
-     * The scaling factor used by the browser for rendering the entire page. For 
+     * The scaling factor used by the browser for rendering the entire page. For
      * example, on Gecko using DPI 200 the scale factor is 2.
      *
      * @private
@@ -341,24 +341,24 @@ function PaintWeb (win, doc) {
   this.shadowAllowed = true;
 
   /**
-   * Image in the clipboard. This is used when some selection is copy/pasted.  
-   * 
+   * Image in the clipboard. This is used when some selection is copy/pasted.
+   *
    * @type ImageData
    */
   this.clipboard = false;
 
   /**
-   * Application initialization state. This property can be in one of the 
+   * Application initialization state. This property can be in one of the
    * following states:
    *
    * <ul>
-   *   <li>{@link PaintWeb.INIT_NOT_STARTED} - The initialization is not 
+   *   <li>{@link PaintWeb.INIT_NOT_STARTED} - The initialization is not
    *   started.
    *
-   *   <li>{@link PaintWeb.INIT_STARTED} - The initialization process is 
+   *   <li>{@link PaintWeb.INIT_STARTED} - The initialization process is
    *   running.
    *
-   *   <li>{@link PaintWeb.INIT_DONE} - The initialization process has completed 
+   *   <li>{@link PaintWeb.INIT_DONE} - The initialization process has completed
    *   successfully.
    *
    *   <li>{@link PaintWeb.INIT_ERROR} - The initialization process has failed.
@@ -386,10 +386,10 @@ function PaintWeb (win, doc) {
   /**
    * List of Canvas context properties to save and restore.
    *
-   * <p>When the Canvas is resized the state is lost. Using context.save/restore 
-   * state does work only in Opera. In Firefox/Gecko and WebKit saved states are 
-   * lost after resize, so there's no state to restore. As such, PaintWeb has 
-   * its own simple state save/restore mechanism. The property values are saved 
+   * <p>When the Canvas is resized the state is lost. Using context.save/restore
+   * state does work only in Opera. In Firefox/Gecko and WebKit saved states are
+   * lost after resize, so there's no state to restore. As such, PaintWeb has
+   * its own simple state save/restore mechanism. The property values are saved
    * into a JavaScript object.
    *
    * @private
@@ -398,9 +398,9 @@ function PaintWeb (win, doc) {
    * @see PaintWeb#stateSave to save the canvas context state.
    * @see PaintWeb#stateRestore to restore a canvas context state.
    */
-  this.stateProperties = ['strokeStyle', 'fillStyle', 'globalAlpha', 
-    'lineWidth', 'lineCap', 'lineJoin', 'miterLimit', 'shadowOffsetX', 
-    'shadowOffsetY', 'shadowBlur', 'shadowColor', 'globalCompositeOperation', 
+  this.stateProperties = ['strokeStyle', 'fillStyle', 'globalAlpha',
+    'lineWidth', 'lineCap', 'lineJoin', 'miterLimit', 'shadowOffsetX',
+    'shadowOffsetY', 'shadowBlur', 'shadowColor', 'globalCompositeOperation',
     'font', 'textAlign', 'textBaseline'];
 
   /**
@@ -408,7 +408,7 @@ function PaintWeb (win, doc) {
    *
    * @private
    * @type pwlib.dom.KeyboardEventListener
-   * @see pwlib.dom.KeyboardEventListener The class dealing with the 
+   * @see pwlib.dom.KeyboardEventListener The class dealing with the
    * cross-browser differences in the DOM keyboard events.
    */
   var kbListener_ = null;
@@ -440,14 +440,14 @@ function PaintWeb (win, doc) {
   this.ELEMENT_NODE = window.Node ? Node.ELEMENT_NODE : 1;
 
   /**
-   * PaintWeb pre-initialization code. This runs when the PaintWeb instance is 
+   * PaintWeb pre-initialization code. This runs when the PaintWeb instance is
    * constructed.
    * @private
    */
   function preInit() {
     var d = new Date();
 
-    // If PaintWeb is running directly from the source code, then the build date 
+    // If PaintWeb is running directly from the source code, then the build date
     // is always today.
     if (_self.build === -1) {
       var dateArr = [d.getFullYear(), d.getMonth()+1, d.getDate()];
@@ -469,14 +469,14 @@ function PaintWeb (win, doc) {
   /**
    * Initialize PaintWeb.
    *
-   * <p>This method is asynchronous, meaning that it will return much sooner 
+   * <p>This method is asynchronous, meaning that it will return much sooner
    * before the application initialization is completed.
    *
-   * @param {Function} [handler] The <code>appInit</code> event handler. Your 
-   * event handler will be invoked automatically when PaintWeb completes 
+   * @param {Function} [handler] The <code>appInit</code> event handler. Your
+   * event handler will be invoked automatically when PaintWeb completes
    * loading, or when an error occurs.
    *
-   * @returns {Boolean} True if the initialization has been started 
+   * @returns {Boolean} True if the initialization has been started
    * successfully, or false if not.
    */
   this.init = function (handler) {
@@ -521,21 +521,22 @@ function PaintWeb (win, doc) {
       return false;
     }
 
-    if (typeof this.config.guiPlaceholder !== 'object' || 
+    if (typeof this.config.guiPlaceholder !== 'object' ||
         this.config.guiPlaceholder.nodeType !== this.ELEMENT_NODE) {
       this.initError(lang.guiPlaceholderWrong);
       return false;
     }
 
     // Silently ignore any wrong value for the config.imageLoad property.
-    if (typeof this.config.imageLoad !== 'object' || 
-        this.config.imageLoad.nodeType !== this.ELEMENT_NODE) {
+    if ( this.config.imageLoad &&
+        (typeof this.config.imageLoad !== 'object' ||
+          this.config.imageLoad.nodeType !== this.ELEMENT_NODE)) {
       this.config.imageLoad = null;
     }
 
     // JSON parser and serializer.
     if (!window.JSON) {
-      this.scriptLoad(PaintWeb.baseFolder + 'includes/json2.js', 
+      this.scriptLoad(PaintWeb.baseFolder + 'includes/json2.js',
           this.jsonlibReady);
     } else {
       this.jsonlibReady();
@@ -552,7 +553,7 @@ function PaintWeb (win, doc) {
     if (window.pwlib) {
       _self.pwlibReady();
     } else {
-      _self.scriptLoad(PaintWeb.baseFolder + 'includes/lib.js', 
+      _self.scriptLoad(PaintWeb.baseFolder + 'includes/lib.js',
           _self.pwlibReady);
     }
   };
@@ -617,29 +618,29 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * Asynchronously load the configuration file. This method issues an 
+   * Asynchronously load the configuration file. This method issues an
    * XMLHttpRequest to load the JSON file.
    *
    * @private
    *
    * @see PaintWeb.config.configFile The configuration file.
-   * @see pwlib.xhrLoad The library function being used for creating the 
+   * @see pwlib.xhrLoad The library function being used for creating the
    * XMLHttpRequest object.
    */
   this.configLoad = function () {
-    pwlib.xhrLoad(PaintWeb.baseFolder + this.config.configFile, 
+    pwlib.xhrLoad(PaintWeb.baseFolder + this.config.configFile,
         this.configReady);
   };
 
   /**
-   * The configuration reader. This is the event handler for the XMLHttpRequest 
+   * The configuration reader. This is the event handler for the XMLHttpRequest
    * object, for the <code>onreadystatechange</code> event.
    *
    * @private
    *
    * @param {XMLHttpRequest} xhr The XMLHttpRequest object being handled.
    *
-   * @see PaintWeb#configLoad The method which issues the XMLHttpRequest request 
+   * @see PaintWeb#configLoad The method which issues the XMLHttpRequest request
    * for loading the configuration file.
    */
   this.configReady = function (xhr) {
@@ -667,14 +668,14 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * Asynchronously load the language file. This method issues an XMLHttpRequest 
+   * Asynchronously load the language file. This method issues an XMLHttpRequest
    * to load the JSON file.
    *
    * @private
    *
-   * @see PaintWeb.config.lang The language you want for the PaintWeb user 
+   * @see PaintWeb.config.lang The language you want for the PaintWeb user
    * interface.
-   * @see pwlib.xhrLoad The library function being used for creating the 
+   * @see pwlib.xhrLoad The library function being used for creating the
    * XMLHttpRequest object.
    */
   this.langLoad = function () {
@@ -696,14 +697,14 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * The language file reader. This is the event handler for the XMLHttpRequest 
+   * The language file reader. This is the event handler for the XMLHttpRequest
    * object, for the <code>onreadystatechange</code> event.
    *
    * @private
    *
    * @param {XMLHttpRequest} xhr The XMLHttpRequest object being handled.
    *
-   * @see PaintWeb#langLoad The method which issues the XMLHttpRequest request 
+   * @see PaintWeb#langLoad The method which issues the XMLHttpRequest request
    * for loading the language file.
    */
   this.langReady = function (xhr) {
@@ -730,7 +731,7 @@ function PaintWeb (win, doc) {
    * Initialize the PaintWeb commands.
    *
    * @private
-   * @returns {Boolean} True if the initialization was successful, or false if 
+   * @returns {Boolean} True if the initialization was successful, or false if
    * not.
    */
   this.initCommands = function () {
@@ -754,7 +755,7 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * Load th PaintWeb GUI. This method loads the GUI markup file, the stylesheet 
+   * Load th PaintWeb GUI. This method loads the GUI markup file, the stylesheet
    * and the script.
    *
    * @private
@@ -780,8 +781,8 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * The <code>load</code> event handler for the PaintWeb GUI script. This 
-   * method creates an instance of the GUI object that just loaded and starts 
+   * The <code>load</code> event handler for the PaintWeb GUI script. This
+   * method creates an instance of the GUI object that just loaded and starts
    * loading the GUI markup.
    *
    * @private
@@ -789,7 +790,7 @@ function PaintWeb (win, doc) {
    * @see PaintWeb.config.guiScript The interface script file.
    * @see PaintWeb.config.guiMarkup The interface markup file.
    * @see pwlib.gui The interface object.
-   * @see pwlib.xhrLoad The library function being used for creating the 
+   * @see pwlib.xhrLoad The library function being used for creating the
    * XMLHttpRequest object.
    */
   this.guiScriptReady = function () {
@@ -814,14 +815,14 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * The GUI markup reader. This is the event handler for the XMLHttpRequest 
+   * The GUI markup reader. This is the event handler for the XMLHttpRequest
    * object, for the <code>onreadystatechange</code> event.
    *
    * @private
    *
    * @param {XMLHttpRequest} xhr The XMLHttpRequest object being handled.
    *
-   * @see PaintWeb#guiScriptReady The method which issues the XMLHttpRequest 
+   * @see PaintWeb#guiScriptReady The method which issues the XMLHttpRequest
    * request for loading the interface markup file.
    */
   this.guiMarkupReady = function (xhr) {
@@ -852,20 +853,20 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * Initialize the Canvas elements. This method creates the elements and 
+   * Initialize the Canvas elements. This method creates the elements and
    * sets-up their dimensions.
    *
-   * <p>The layer Canvas element will have the background rendered with the 
+   * <p>The layer Canvas element will have the background rendered with the
    * color from {@link PaintWeb.config.backgroundColor}.
-   * 
-   * <p>If {@link PaintWeb.config.imageLoad} is defined, then the image element 
+   *
+   * <p>If {@link PaintWeb.config.imageLoad} is defined, then the image element
    * is inserted into the Canvas image.
    *
-   * <p>All the Canvas event listeners are also attached to the buffer Canvas 
+   * <p>All the Canvas event listeners are also attached to the buffer Canvas
    * element.
    *
    * @private
-   * @returns {Boolean} True if the initialization was successful, or false if 
+   * @returns {Boolean} True if the initialization was successful, or false if
    * not.
    *
    * @see PaintWeb#ev_canvas The global Canvas events handler.
@@ -902,7 +903,7 @@ function PaintWeb (win, doc) {
       return false;
     }
 
-    if (!pwlib.isSameHost(imageLoad.src, win.location.host)) {
+    if (imageLoad && !pwlib.isSameHost(imageLoad.src, win.location.host)) {
       cfg.imageLoad = imageLoad = null;
       alert(lang.imageLoadDifferentHost);
     }
@@ -935,10 +936,10 @@ function PaintWeb (win, doc) {
     /*
      * Setup the event listeners for the canvas element.
      *
-     * The event handler (ev_canvas) calls the event handlers associated with 
+     * The event handler (ev_canvas) calls the event handlers associated with
      * the active tool (e.g. tool.mousemove).
      */
-    var events = ['dblclick', 'click', 'mousedown', 'mouseup', 'mousemove', 
+    var events = ['dblclick', 'click', 'mousedown', 'mouseup', 'mousemove',
         'contextmenu'],
         n = events.length;
 
@@ -950,23 +951,23 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * Initialize the Canvas buffer context. This method updates the context 
-   * properties to reflect the values defined in the PaintWeb configuration 
+   * Initialize the Canvas buffer context. This method updates the context
+   * properties to reflect the values defined in the PaintWeb configuration
    * file.
-   * 
-   * <p>Shadows support is also determined. The {@link PaintWeb#shadowSupported} 
+   *
+   * <p>Shadows support is also determined. The {@link PaintWeb#shadowSupported}
    * value is updated accordingly.
    *
    * @private
-   * @returns {Boolean} True if the initialization was successful, or false if 
+   * @returns {Boolean} True if the initialization was successful, or false if
    * not.
    */
   this.initContext = function () {
     var bufferContext = this.buffer.context;
 
     // Opera does not render shadows, at the moment.
-    if (!pwlib.browser.opera && bufferContext.shadowColor && 'shadowOffsetX' in 
-        bufferContext && 'shadowOffsetY' in bufferContext && 'shadowBlur' in 
+    if (!pwlib.browser.opera && bufferContext.shadowColor && 'shadowOffsetX' in
+        bufferContext && 'shadowOffsetY' in bufferContext && 'shadowBlur' in
         bufferContext) {
       this.shadowSupported = true;
     } else {
@@ -1016,7 +1017,7 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * Initialization procedure which runs after the configuration, language and 
+   * Initialization procedure which runs after the configuration, language and
    * GUI files have loaded.
    *
    * <p>This method dispatches the {@link pwlib.appEvent.appInit} event.
@@ -1035,8 +1036,8 @@ function PaintWeb (win, doc) {
     this.historyAdd();
     this.image.modified = false;
 
-    // The global keyboard events handler implements everything needed for 
-    // switching between tools and for accessing any other functionality of the 
+    // The global keyboard events handler implements everything needed for
+    // switching between tools and for accessing any other functionality of the
     // Web application.
     kbListener_ = new pwlib.dom.KeyboardEventListener(this.config.guiPlaceholder,
         {keydown:  this.ev_keyboard,
@@ -1159,12 +1160,12 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * Update the canvas scaling. This method determines the DPI and/or zoom level 
-   * used by the browser to render the application. Based on these values, the 
-   * canvas elements are scaled down to cancel any upscaling performed by the 
+   * Update the canvas scaling. This method determines the DPI and/or zoom level
+   * used by the browser to render the application. Based on these values, the
+   * canvas elements are scaled down to cancel any upscaling performed by the
    * browser.
    *
-   * <p>The {@link pwlib.appEvent.canvasSizeChange} application event is 
+   * <p>The {@link pwlib.appEvent.canvasSizeChange} application event is
    * dispatched.
    */
   this.updateCanvasScaling = function () {
@@ -1179,7 +1180,7 @@ function PaintWeb (win, doc) {
 
     if (pwlib.browser.opera) {
       // Opera zoom level detection.
-      // The scaling factor is sufficiently accurate for zoom levels between 
+      // The scaling factor is sufficiently accurate for zoom levels between
       // 100% and 200% (in steps of 10%).
 
       scaleNew = win.innerHeight / height;
@@ -1212,7 +1213,7 @@ function PaintWeb (win, doc) {
 
       // New in Gecko 1.9.2.
       if ('mozImageSmoothingEnabled' in layerStyle) {
-        layerStyle.mozImageSmoothingEnabled 
+        layerStyle.mozImageSmoothingEnabled
           = bufferStyle.mozImageSmoothingEnabled = false;
       }
     }
@@ -1228,33 +1229,33 @@ function PaintWeb (win, doc) {
 
     image.canvasScale = styleWidth / image.width;
 
-    // FIXME: MSIE 9 clears the Canvas element when you change the 
+    // FIXME: MSIE 9 clears the Canvas element when you change the
     // elem.style.width/height... *argh*
     bufferStyle.width  = layerStyle.width  = styleWidth  + 'px';
     bufferStyle.height = layerStyle.height = styleHeight + 'px';
 
-    _self.events.dispatch(new appEvent.canvasSizeChange(styleWidth, styleHeight, 
+    _self.events.dispatch(new appEvent.canvasSizeChange(styleWidth, styleHeight,
           image.canvasScale));
   };
 
   /**
    * The Canvas events handler.
-   * 
-   * <p>This method determines the mouse position relative to the canvas 
-   * element, after which it invokes the method of the currently active tool 
-   * with the same name as the current event type. For example, for the 
-   * <code>mousedown</code> event the <code><var>tool</var>.mousedown()</code> 
+   *
+   * <p>This method determines the mouse position relative to the canvas
+   * element, after which it invokes the method of the currently active tool
+   * with the same name as the current event type. For example, for the
+   * <code>mousedown</code> event the <code><var>tool</var>.mousedown()</code>
    * method is invoked.
    *
-   * <p>The mouse coordinates are stored in the {@link PaintWeb#mouse} object.  
-   * These properties take into account the current zoom level and the image 
+   * <p>The mouse coordinates are stored in the {@link PaintWeb#mouse} object.
+   * These properties take into account the current zoom level and the image
    * scroll.
    *
    * @private
    *
    * @param {Event} ev The DOM Event object.
    *
-   * @returns {Boolean} True if the tool event handler executed, or false 
+   * @returns {Boolean} True if the tool event handler executed, or false
    * otherwise.
    */
   this.ev_canvas = function (ev) {
@@ -1266,13 +1267,13 @@ function PaintWeb (win, doc) {
       case 'mousedown':
         /*
          * If the mouse is down already, skip the event.
-         * This is needed to allow the user to go out of the drawing canvas, 
-         * release the mouse button, then come back and click to end the drawing 
+         * This is needed to allow the user to go out of the drawing canvas,
+         * release the mouse button, then come back and click to end the drawing
          * operation.
-         * Additionally, this is needed to allow extensions like MouseKeys to 
-         * perform their actions during a drawing operation, even when a real 
-         * mouse is used. For example, allow the user to start drawing with the 
-         * keyboard (press 0) then use the real mouse to move and click to end 
+         * Additionally, this is needed to allow extensions like MouseKeys to
+         * perform their actions during a drawing operation, even when a real
+         * mouse is used. For example, allow the user to start drawing with the
+         * keyboard (press 0) then use the real mouse to move and click to end
          * the drawing operation.
          */
         if (_self.mouse.buttonDown) {
@@ -1290,7 +1291,7 @@ function PaintWeb (win, doc) {
     }
 
     /*
-     * Update the event, to include the mouse position, relative to the canvas 
+     * Update the event, to include the mouse position, relative to the canvas
      * element.
      */
     if ('layerX' in ev) {
@@ -1321,32 +1322,32 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * The global keyboard events handler. This makes all the keyboard shortcuts 
+   * The global keyboard events handler. This makes all the keyboard shortcuts
    * work in the web application.
    *
-   * <p>This method determines the key the user pressed, based on the 
-   * <var>ev</var> DOM Event object, taking into consideration any browser 
+   * <p>This method determines the key the user pressed, based on the
+   * <var>ev</var> DOM Event object, taking into consideration any browser
    * differences. Two new properties are added to the <var>ev</var> object:
    *
    * <ul>
-   *   <li><var>ev.kid_</var> is a string holding the key and the modifiers list 
-   *   (<kbd>Control</kbd>, <kbd>Alt</kbd> and/or <kbd>Shift</kbd>). For 
-   *   example, if the user would press the key <kbd>A</kbd> while holding down 
-   *   <kbd>Control</kbd>, then <var>ev.kid_</var> would be "Control A". If the 
-   *   user would press "9" while holding down <kbd>Shift</kbd>, then 
+   *   <li><var>ev.kid_</var> is a string holding the key and the modifiers list
+   *   (<kbd>Control</kbd>, <kbd>Alt</kbd> and/or <kbd>Shift</kbd>). For
+   *   example, if the user would press the key <kbd>A</kbd> while holding down
+   *   <kbd>Control</kbd>, then <var>ev.kid_</var> would be "Control A". If the
+   *   user would press "9" while holding down <kbd>Shift</kbd>, then
    *   <var>ev.kid_</var> would be "Shift 9".
    *
-   *   <li><var>ev.kobj_</var> holds a reference to the keyboard shortcut 
-   *   definition object from the configuration. This is useful for reuse, for 
-   *   passing parameters from the keyboard shortcut configuration object to the 
+   *   <li><var>ev.kobj_</var> holds a reference to the keyboard shortcut
+   *   definition object from the configuration. This is useful for reuse, for
+   *   passing parameters from the keyboard shortcut configuration object to the
    *   event handler.
    * </ul>
    *
-   * <p>In {@link PaintWeb.config.keys} one can setup the keyboard shortcuts.  
-   * If the keyboard combination is found in that list, then the associated tool 
+   * <p>In {@link PaintWeb.config.keys} one can setup the keyboard shortcuts.
+   * If the keyboard combination is found in that list, then the associated tool
    * is activated.
    *
-   * <p>Note: this method includes some work-around for making the image zoom 
+   * <p>Note: this method includes some work-around for making the image zoom
    * keys work well both in Opera and Firefox.
    *
    * @private
@@ -1354,7 +1355,7 @@ function PaintWeb (win, doc) {
    * @param {Event} ev The DOM Event object.
    *
    * @see PaintWeb.config.keys The keyboard shortcuts configuration.
-   * @see pwlib.dom.KeyboardEventListener The class dealing with the 
+   * @see pwlib.dom.KeyboardEventListener The class dealing with the
    * cross-browser differences in the DOM keyboard events.
    */
   this.ev_keyboard = function (ev) {
@@ -1366,7 +1367,7 @@ function PaintWeb (win, doc) {
     if (ev.target && ev.target.nodeName) {
       switch (ev.target.nodeName.toLowerCase()) {
         case 'input':
-          if (ev.type === 'keypress' && (ev.key_ === 'Up' || ev.key_ === 'Down') 
+          if (ev.type === 'keypress' && (ev.key_ === 'Up' || ev.key_ === 'Down')
               && ev.target.getAttribute('type') === 'number') {
             _self.ev_numberInput(ev);
           }
@@ -1377,7 +1378,7 @@ function PaintWeb (win, doc) {
       }
     }
 
-    // Rather ugly, but the only way, at the moment, to detect these keys in 
+    // Rather ugly, but the only way, at the moment, to detect these keys in
     // Opera and Firefox.
     if (ev.type === 'keypress' && ev.char_) {
       var isZoomKey = true,
@@ -1415,14 +1416,14 @@ function PaintWeb (win, doc) {
     }
     ev.kid_ += ev.key_;
 
-    // Send the keyboard event to the event handler of the active tool. If it 
+    // Send the keyboard event to the event handler of the active tool. If it
     // returns true, we consider it recognized the keyboard shortcut.
     if (_self.tool && ev.type in _self.tool && _self.tool[ev.type](ev)) {
       return true;
     }
 
-    // If there's no event handler within the active tool, or if the event 
-    // handler does otherwise return false, then we continue with the global 
+    // If there's no event handler within the active tool, or if the event
+    // handler does otherwise return false, then we continue with the global
     // keyboard shortcuts.
 
     var gkey = _self.config.keys[ev.kid_];
@@ -1459,9 +1460,9 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * This is the <code>keypress</code> event handler for inputs of type=number.  
-   * This function only handles cases when the key is <kbd>Up</kbd> or 
-   * <kbd>Down</kbd>. For the <kbd>Up</kbd> key the input value is increased, 
+   * This is the <code>keypress</code> event handler for inputs of type=number.
+   * This function only handles cases when the key is <kbd>Up</kbd> or
+   * <kbd>Down</kbd>. For the <kbd>Up</kbd> key the input value is increased,
    * and for the <kbd>Down</kbd> the value is decreased.
    *
    * @private
@@ -1515,7 +1516,7 @@ function PaintWeb (win, doc) {
 
     target.value = val;
 
-    // Dispatch the 'change' events to make sure that any associated event 
+    // Dispatch the 'change' events to make sure that any associated event
     // handlers pick up the changes.
     if (doc.createEvent && target.dispatchEvent) {
       var ev_change = doc.createEvent('HTMLEvents');
@@ -1527,8 +1528,8 @@ function PaintWeb (win, doc) {
   /**
    * Zoom into the image.
    *
-   * @param {mixed} ev An event object which might have the <var>shiftKey</var> 
-   * property. If the property evaluates to true, then the zoom level will 
+   * @param {mixed} ev An event object which might have the <var>shiftKey</var>
+   * property. If the property evaluates to true, then the zoom level will
    * increase twice more than normal.
    *
    * @returns {Boolean} True if the operation was successful, or false if not.
@@ -1553,8 +1554,8 @@ function PaintWeb (win, doc) {
   /**
    * Zoom out of the image.
    *
-   * @param {mixed} ev An event object which might have the <var>shiftKey</var> 
-   * property. If the property evaluates to true, then the zoom level will 
+   * @param {mixed} ev An event object which might have the <var>shiftKey</var>
+   * property. If the property evaluates to true, then the zoom level will
    * decrease twice more than normal.
    *
    * @returns {Boolean} True if the operation was successful, or false if not.
@@ -1590,20 +1591,20 @@ function PaintWeb (win, doc) {
   /**
    * Change the image zoom level.
    *
-   * <p>This method dispatches the {@link pwlib.appEvent.imageZoom} application 
-   * event before zooming the image. Once the image zoom is applied, the {@link 
+   * <p>This method dispatches the {@link pwlib.appEvent.imageZoom} application
+   * event before zooming the image. Once the image zoom is applied, the {@link
    * pwlib.appEvent.canvasSizeChange} event is dispatched.
    *
    * @param {Number|String} level The level you want to zoom the image to.
-   * 
-   * <p>If the value is a number, it must be a floating point positive number, 
+   *
+   * <p>If the value is a number, it must be a floating point positive number,
    * where 0.5 means 50%, 1 means 100% (normal) zoom, 4 means 400% and so on.
    *
-   * <p>If the value is a string it must be "+" or "-". This means that the zoom 
-   * level will increase/decrease using the configured {@link 
+   * <p>If the value is a string it must be "+" or "-". This means that the zoom
+   * level will increase/decrease using the configured {@link
    * PaintWeb.config.zoomStep}.
    *
-   * @returns {Boolean} True if the image zoom level changed successfully, or 
+   * @returns {Boolean} True if the image zoom level changed successfully, or
    * false if not.
    */
   this.imageZoomTo = function (level) {
@@ -1643,14 +1644,14 @@ function PaintWeb (win, doc) {
 
     image.canvasScale = styleWidth / image.width;
 
-    // FIXME: MSIE 9 clears the Canvas element when you change the 
+    // FIXME: MSIE 9 clears the Canvas element when you change the
     // elem.style.width/height... *argh*
     bufferStyle.width  = layerStyle.width  = styleWidth  + 'px';
     bufferStyle.height = layerStyle.height = styleHeight + 'px';
 
     image.zoom = level;
 
-    this.events.dispatch(new appEvent.canvasSizeChange(styleWidth, styleHeight, 
+    this.events.dispatch(new appEvent.canvasSizeChange(styleWidth, styleHeight,
           image.canvasScale));
 
     return true;
@@ -1659,14 +1660,14 @@ function PaintWeb (win, doc) {
   /**
    * Crop the image.
    *
-   * <p>The content of the image is retained only if the browser implements the 
+   * <p>The content of the image is retained only if the browser implements the
    * <code>getImageData</code> and <code>putImageData</code> methods.
    *
-   * <p>This method dispatches three application events: {@link 
-   * pwlib.appEvent.imageSizeChange}, {@link pwlib.appEvent.canvasSizeChange} 
-   * and {@link pwlib.appEvent.imageCrop}. The <code>imageCrop</code> event is 
-   * dispatched before the image is cropped. The <code>imageSizeChange</code> 
-   * and <code>canvasSizeChange</code> events are dispatched after the image is 
+   * <p>This method dispatches three application events: {@link
+   * pwlib.appEvent.imageSizeChange}, {@link pwlib.appEvent.canvasSizeChange}
+   * and {@link pwlib.appEvent.imageCrop}. The <code>imageCrop</code> event is
+   * dispatched before the image is cropped. The <code>imageSizeChange</code>
+   * and <code>canvasSizeChange</code> events are dispatched after the image is
    * cropped.
    *
    * @param {Number} cropX Image cropping start position on the x-axis.
@@ -1674,7 +1675,7 @@ function PaintWeb (win, doc) {
    * @param {Number} cropWidth Image crop width.
    * @param {Number} cropHeight Image crop height.
    *
-   * @returns {Boolean} True if the image was cropped successfully, or false if 
+   * @returns {Boolean} True if the image was cropped successfully, or false if
    * not.
    */
   this.imageCrop = function (cropX, cropY, cropWidth, cropHeight) {
@@ -1689,13 +1690,13 @@ function PaintWeb (win, doc) {
     cropWidth  = parseInt(cropWidth);
     cropHeight = parseInt(cropHeight);
 
-    if (!cropWidth || !cropHeight || isNaN(cropX) || isNaN(cropY) || 
-        isNaN(cropWidth) || isNaN(cropHeight) || cropX >= image.width || cropY 
+    if (!cropWidth || !cropHeight || isNaN(cropX) || isNaN(cropY) ||
+        isNaN(cropWidth) || isNaN(cropHeight) || cropX >= image.width || cropY
         >= image.height) {
       return false;
     }
 
-    var cancel = this.events.dispatch(new appEvent.imageCrop(cropX, cropY, 
+    var cancel = this.events.dispatch(new appEvent.imageCrop(cropX, cropY,
           cropWidth, cropHeight));
     if (cancel) {
       return false;
@@ -1709,7 +1710,7 @@ function PaintWeb (win, doc) {
       cropHeight = this.config.imageHeightMax;
     }
 
-    if (cropX === 0 && cropY === 0 && image.width === cropWidth && image.height 
+    if (cropX === 0 && cropY === 0 && image.width === cropWidth && image.height
         === cropHeight) {
       return true;
     }
@@ -1735,14 +1736,14 @@ function PaintWeb (win, doc) {
     if (layerContext.getImageData) {
       // TODO: handle "out of memory" errors.
       try {
-        layerData = layerContext.getImageData(cropX, cropY, dataWidth, 
+        layerData = layerContext.getImageData(cropX, cropY, dataWidth,
             dataHeight);
       } catch (err) { }
     }
 
     if (bufferContext.getImageData) {
       try {
-        bufferData = bufferContext.getImageData(cropX, cropY, dataWidth, 
+        bufferData = bufferContext.getImageData(cropX, cropY, dataWidth,
             dataHeight);
       } catch (err) { }
     }
@@ -1775,7 +1776,7 @@ function PaintWeb (win, doc) {
     bufferState = layerState = layerData = bufferData = null;
 
     this.events.dispatch(new appEvent.imageSizeChange(cropWidth, cropHeight));
-    this.events.dispatch(new appEvent.canvasSizeChange(scaledWidth, 
+    this.events.dispatch(new appEvent.canvasSizeChange(scaledWidth,
           scaledHeight, image.canvasScale));
 
     return true;
@@ -1784,7 +1785,7 @@ function PaintWeb (win, doc) {
   /**
    * Save the state of a Canvas context.
    *
-   * @param {CanvasRenderingContext2D} context The 2D context of the Canvas 
+   * @param {CanvasRenderingContext2D} context The 2D context of the Canvas
    * element you want to save the state.
    *
    * @returns {Object} The object has all the state properties and values.
@@ -1809,10 +1810,10 @@ function PaintWeb (win, doc) {
   /**
    * Restore the state of a Canvas context.
    *
-   * @param {CanvasRenderingContext2D} context The 2D context where you want to 
+   * @param {CanvasRenderingContext2D} context The 2D context where you want to
    * restore the state.
    *
-   * @param {Object} stateObj The state object saved by the {@link 
+   * @param {Object} stateObj The state object saved by the {@link
    * PaintWeb#stateSave} method.
    *
    * @returns {Boolean} True if the operation was successful, or false if not.
@@ -1830,7 +1831,7 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * Allow shadows. This method re-enabled shadow rendering, if it was enabled 
+   * Allow shadows. This method re-enabled shadow rendering, if it was enabled
    * before shadows were disallowed.
    *
    * <p>The {@link pwlib.appEvent.shadowAllow} event is dispatched.
@@ -1840,7 +1841,7 @@ function PaintWeb (win, doc) {
       return;
     }
 
-    // Note that some daily builds of Webkit in Chromium fail to render the 
+    // Note that some daily builds of Webkit in Chromium fail to render the
     // shadow when context.drawImage() is used (see the this.layerUpdate()).
     var context = this.layer.context,
         cfg = this.config.shadow;
@@ -1881,7 +1882,7 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * Update the current image layer by moving the pixels from the buffer onto 
+   * Update the current image layer by moving the pixels from the buffer onto
    * the layer. This method also adds a point into the history.
    *
    * @returns {Boolean} True if the operation was successful, or false if not.
@@ -1897,7 +1898,7 @@ function PaintWeb (win, doc) {
   /**
    * Add the current image layer to the history.
    *
-   * <p>Once the history state has been updated, this method dispatches the 
+   * <p>Once the history state has been updated, this method dispatches the
    * {@link pwlib.appEvent.historyUpdate} event.
    *
    * @returns {Boolean} True if the operation was successful, or false if not.
@@ -1919,7 +1920,7 @@ function PaintWeb (win, doc) {
 
     // TODO: in case of "out of memory" errors... I should show up some error.
     try {
-      history.states.push(layerContext.getImageData(0, 0, this.image.width, 
+      history.states.push(layerContext.getImageData(0, 0, this.image.width,
             this.image.height));
     } catch (err) {
       return false;
@@ -1929,14 +1930,14 @@ function PaintWeb (win, doc) {
     if ('historyLimit' in this.config &&
         history.states.length > this.config.historyLimit) {
 
-      history.states.splice(0, history.states.length 
+      history.states.splice(0, history.states.length
           - this.config.historyLimit);
     }
     history.pos = history.states.length;
 
     this.image.modified = true;
 
-    this.events.dispatch(new appEvent.historyUpdate(history.pos, prevPos, 
+    this.events.dispatch(new appEvent.historyUpdate(history.pos, prevPos,
           history.pos));
 
     return true;
@@ -1945,12 +1946,12 @@ function PaintWeb (win, doc) {
   /**
    * Jump to any ImageData/position in the history.
    *
-   * <p>Once the history state has been updated, this method dispatches the 
+   * <p>Once the history state has been updated, this method dispatches the
    * {@link pwlib.appEvent.historyUpdate} event.
    *
    * @param {Number|String} pos The history position to jump to.
-   * 
-   * <p>If the value is a number, then it must point to an existing index in the  
+   *
+   * <p>If the value is a number, then it must point to an existing index in the
    * <var>{@link PaintWeb#history}.states</var> array.
    *
    * <p>If the value is a string, it must be "undo" or "redo".
@@ -1983,7 +1984,7 @@ function PaintWeb (win, doc) {
       return false;
     }
 
-    // Each image in the history can have a different size. As such, the script 
+    // Each image in the history can have a different size. As such, the script
     // must take this into consideration.
     var w = MathMin(image.width,  himg.width),
         h = MathMin(image.height, himg.height);
@@ -1995,7 +1996,7 @@ function PaintWeb (win, doc) {
       layerContext.putImageData(himg, 0, 0, 0, 0, w, h);
 
     } catch (err) {
-      // The workaround is to use a new canvas from which we can copy the 
+      // The workaround is to use a new canvas from which we can copy the
       // history image without causing any exceptions.
       var tmp    = doc.createElement('canvas');
       tmp.width  = himg.width;
@@ -2012,7 +2013,7 @@ function PaintWeb (win, doc) {
 
     history.pos = pos;
 
-    this.events.dispatch(new appEvent.historyUpdate(pos, cpos, 
+    this.events.dispatch(new appEvent.historyUpdate(pos, cpos,
           history.states.length));
 
     return true;
@@ -2033,7 +2034,7 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * Perform horizontal/vertical line snapping. This method updates the mouse 
+   * Perform horizontal/vertical line snapping. This method updates the mouse
    * coordinates to "snap" with the given coordinates.
    *
    * @param {Number} x The x-axis location.
@@ -2053,17 +2054,17 @@ function PaintWeb (win, doc) {
   /**
    * Activate a drawing tool by ID.
    *
-   * <p>The <var>id</var> provided must be of an existing drawing tool, one that  
+   * <p>The <var>id</var> provided must be of an existing drawing tool, one that
    * has been installed.
    *
-   * <p>The <var>ev</var> argument is an optional DOM Event object which is 
-   * useful when dealing with different types of tool activation, either by 
-   * keyboard or by mouse events. Tool-specific code can implement different 
+   * <p>The <var>ev</var> argument is an optional DOM Event object which is
+   * useful when dealing with different types of tool activation, either by
+   * keyboard or by mouse events. Tool-specific code can implement different
    * functionality based on events.
    *
-   * <p>This method dispatches the {@link pwlib.appEvent.toolPreactivate} event 
-   * before creating the new tool instance. Once the new tool is successfully 
-   * activated, the {@link pwlib.appEvent.toolActivate} event is also 
+   * <p>This method dispatches the {@link pwlib.appEvent.toolPreactivate} event
+   * before creating the new tool instance. Once the new tool is successfully
+   * activated, the {@link pwlib.appEvent.toolActivate} event is also
    * dispatched.
    *
    * @param {String} id The ID of the drawing tool to be activated.
@@ -2102,16 +2103,16 @@ function PaintWeb (win, doc) {
 
     /*
      * Each tool can implement its own mouse and keyboard events handler.
-     * Additionally, tool objects can implement handlers for the deactivation 
+     * Additionally, tool objects can implement handlers for the deactivation
      * and activation events.
-     * Given tool1 is active and tool2 is going to be activated, then the 
+     * Given tool1 is active and tool2 is going to be activated, then the
      * following event handlers will be called:
      *
      * tool2.preActivate
      * tool1.deactivate
      * tool2.activate
      *
-     * In the "preActivate" event handler you can cancel the tool activation by 
+     * In the "preActivate" event handler you can cancel the tool activation by
      * returning a value which evaluates to false.
      */
 
@@ -2129,7 +2130,7 @@ function PaintWeb (win, doc) {
 
     this.mouse.buttonDown = false;
 
-    // Besides the "constructor", each tool can also have code which is run 
+    // Besides the "constructor", each tool can also have code which is run
     // after the deactivation of the previous tool.
     if ('activate' in this.tool) {
       this.tool.activate(ev);
@@ -2143,13 +2144,13 @@ function PaintWeb (win, doc) {
   /**
    * Register a new drawing tool into PaintWeb.
    *
-   * <p>This method dispatches the {@link pwlib.appEvent.toolRegister} 
+   * <p>This method dispatches the {@link pwlib.appEvent.toolRegister}
    * application event.
    *
-   * @param {String} id The ID of the new tool. The tool object must exist in 
+   * @param {String} id The ID of the new tool. The tool object must exist in
    * {@link pwlib.tools}.
    *
-   * @returns {Boolean} True if the tool was successfully registered, or false 
+   * @returns {Boolean} True if the tool was successfully registered, or false
    * if not.
    *
    * @see PaintWeb#toolUnregister allows you to unregister tools.
@@ -2161,7 +2162,7 @@ function PaintWeb (win, doc) {
       return false;
     }
 
-    // TODO: it would be very nice to create the tool instance on register, for 
+    // TODO: it would be very nice to create the tool instance on register, for
     // further extensibility.
 
     var tool = pwlib.tools[id];
@@ -2183,12 +2184,12 @@ function PaintWeb (win, doc) {
   /**
    * Unregister a drawing tool from PaintWeb.
    *
-   * <p>This method dispatches the {@link pwlib.appEvent.toolUnregister} 
+   * <p>This method dispatches the {@link pwlib.appEvent.toolUnregister}
    * application event.
    *
    * @param {String} id The ID of the tool you want to unregister.
    *
-   * @returns {Boolean} True if the tool was unregistered, or false if it does 
+   * @returns {Boolean} True if the tool was unregistered, or false if it does
    * not exist or some error occurred.
    *
    * @see PaintWeb#toolRegister allows you to register new drawing tools.
@@ -2208,18 +2209,18 @@ function PaintWeb (win, doc) {
   /**
    * Register a new extension into PaintWeb.
    *
-   * <p>If the extension object being constructed has the 
-   * <code>extensionRegister()</code> method, then it will be invoked, allowing 
-   * any custom extension registration code to run. If the method returns false, 
+   * <p>If the extension object being constructed has the
+   * <code>extensionRegister()</code> method, then it will be invoked, allowing
+   * any custom extension registration code to run. If the method returns false,
    * then the extension will not be registered.
    *
-   * <p>Once the extension is successfully registered, this method dispatches 
+   * <p>Once the extension is successfully registered, this method dispatches
    * the {@link pwlib.appEvent.extensionRegister} application event.
    *
-   * @param {String} id The ID of the new extension. The extension object 
+   * @param {String} id The ID of the new extension. The extension object
    * constructor must exist in {@link pwlib.extensions}.
    *
-   * @returns {Boolean} True if the extension was successfully registered, or 
+   * @returns {Boolean} True if the extension was successfully registered, or
    * false if not.
    *
    * @see PaintWeb#extensionUnregister allows you to unregister extensions.
@@ -2253,16 +2254,16 @@ function PaintWeb (win, doc) {
   /**
    * Unregister an extension from PaintWeb.
    *
-   * <p>If the extension object being destructed has the 
-   * <code>extensionUnregister()</code> method, then it will be invoked, 
+   * <p>If the extension object being destructed has the
+   * <code>extensionUnregister()</code> method, then it will be invoked,
    * allowing any custom extension removal code to run.
    *
-   * <p>Before the extension is unregistered, this method dispatches the {@link 
+   * <p>Before the extension is unregistered, this method dispatches the {@link
    * pwlib.appEvent.extensionUnregister} application event.
    *
    * @param {String} id The ID of the extension object you want to unregister.
    *
-   * @returns {Boolean} True if the extension was removed, or false if it does 
+   * @returns {Boolean} True if the extension was removed, or false if it does
    * not exist or some error occurred.
    *
    * @see PaintWeb#extensionRegister allows you to register new extensions.
@@ -2285,23 +2286,23 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * Register a new command in PaintWeb. Commands are simple function objects 
+   * Register a new command in PaintWeb. Commands are simple function objects
    * which can be invoked by keyboard shortcuts or by GUI elements.
    *
-   * <p>Once the command is successfully registered, this method dispatches the 
+   * <p>Once the command is successfully registered, this method dispatches the
    * {@link pwlib.appEvent.commandRegister} application event.
    *
    * @param {String} id The ID of the new command.
    * @param {Function} func The command function.
    *
-   * @returns {Boolean} True if the command was successfully registered, or 
+   * @returns {Boolean} True if the command was successfully registered, or
    * false if not.
    *
    * @see PaintWeb#commandUnregister allows you to unregister commands.
    * @see PaintWeb#commands Holds all the registered commands.
    */
   this.commandRegister = function (id, func) {
-    if (typeof id !== 'string' || !id || typeof func !== 'function' || id in 
+    if (typeof id !== 'string' || !id || typeof func !== 'function' || id in
         this.commands) {
       return false;
     }
@@ -2315,12 +2316,12 @@ function PaintWeb (win, doc) {
   /**
    * Unregister a command from PaintWeb.
    *
-   * <p>Before the command is unregistered, this method dispatches the {@link 
+   * <p>Before the command is unregistered, this method dispatches the {@link
    * pwlib.appEvent.commandUnregister} application event.
    *
    * @param {String} id The ID of the command you want to unregister.
    *
-   * @returns {Boolean} True if the command was removed successfully, or false 
+   * @returns {Boolean} True if the command was removed successfully, or false
    * if not.
    *
    * @see PaintWeb#commandRegister allows you to register new commands.
@@ -2364,7 +2365,7 @@ function PaintWeb (win, doc) {
       if (!xhr || xhr.readyState !== 4) {
         return;
 
-      } else if ((xhr.status !== 304 && xhr.status !== 200) || 
+      } else if ((xhr.status !== 304 && xhr.status !== 200) ||
           !xhr.responseText) {
         handler(false, xhr);
 
@@ -2387,7 +2388,7 @@ function PaintWeb (win, doc) {
   /**
    * Insert a stylesheet into the document.
    *
-   * @param {String} id The stylesheet ID. This is used to avoid inserting the 
+   * @param {String} id The stylesheet ID. This is used to avoid inserting the
    * same style in the document.
    * @param {String} url The URL of the stylesheet you want to insert.
    * @param {String} [media='screen, projection'] The media attribute.
@@ -2443,21 +2444,21 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * Load an image. By loading an image the history is cleared and the Canvas 
+   * Load an image. By loading an image the history is cleared and the Canvas
    * dimensions are updated to fit the new image.
    *
-   * <p>This method dispatches two application events: {@link 
-   * pwlib.appEvent.imageSizeChange} and {@link 
+   * <p>This method dispatches two application events: {@link
+   * pwlib.appEvent.imageSizeChange} and {@link
    * pwlib.appEvent.canvasSizeChange}.
    *
-   * @param {Element} importImage The image element you want to load into the 
+   * @param {Element} importImage The image element you want to load into the
    * Canvas.
    *
    * @returns {Boolean} True if the operation was successful, or false if not.
    */
   this.imageLoad = function (importImage) {
-    if (!importImage || !importImage.width || !importImage.height || 
-        importImage.nodeType !== this.ELEMENT_NODE || 
+    if (!importImage || !importImage.width || !importImage.height ||
+        importImage.nodeType !== this.ELEMENT_NODE ||
         !pwlib.isSameHost(importImage.src, win.location.host)) {
       return false;
     }
@@ -2496,10 +2497,10 @@ function PaintWeb (win, doc) {
       image.height = importImage.height;
       _self.config.imageLoad = importImage;
 
-      this.events.dispatch(new appEvent.imageSizeChange(image.width, 
+      this.events.dispatch(new appEvent.imageSizeChange(image.width,
             image.height));
 
-      this.events.dispatch(new appEvent.canvasSizeChange(styleWidth, styleHeight, 
+      this.events.dispatch(new appEvent.canvasSizeChange(styleWidth, styleHeight,
             image.canvasScale));
     }
 
@@ -2532,27 +2533,27 @@ function PaintWeb (win, doc) {
    *
    * <p>This method dispatches the {@link pwlib.appEvent.imageSave} event.
    *
-   * <p><strong>Note:</strong> the "Save image" operation relies on integration 
-   * extensions. A vanilla configuration of PaintWeb will simply open the the 
-   * image in a new tab using a data: URL. You must have some event listener for 
+   * <p><strong>Note:</strong> the "Save image" operation relies on integration
+   * extensions. A vanilla configuration of PaintWeb will simply open the the
+   * image in a new tab using a data: URL. You must have some event listener for
    * the <code>imageSave</code> event and you must prevent the default action.
    *
-   * <p>If the default action for the <code>imageSave</code> application event 
-   * is not prevented, then this method will also dispatch the {@link 
+   * <p>If the default action for the <code>imageSave</code> application event
+   * is not prevented, then this method will also dispatch the {@link
    * pwlib.appEvent.imageSaveResult} application event.
    *
-   * <p>Your event handler for the <code>imageSave</code> event must dispatch 
+   * <p>Your event handler for the <code>imageSave</code> event must dispatch
    * the <code>imageSaveResult</code> event.
    *
-   * @param {String} [type="auto"] Image MIME type. This tells the browser which 
-   * format to use when saving the image. If the image format type is not 
+   * @param {String} [type="auto"] Image MIME type. This tells the browser which
+   * format to use when saving the image. If the image format type is not
    * supported, then the image is saved as PNG.
    *
-   * <p>You can use the resulting data URL to check which is the actual image 
+   * <p>You can use the resulting data URL to check which is the actual image
    * format.
    *
-   * <p>When <var>type</var> is "auto" then PaintWeb checks the type of the 
-   * image currently loaded ({@link PaintWeb.config.imageLoad}). If the format 
+   * <p>When <var>type</var> is "auto" then PaintWeb checks the type of the
+   * image currently loaded ({@link PaintWeb.config.imageLoad}). If the format
    * is recognized, then the same format is used to save the image.
    *
    * @returns {Boolean} True if the operation was successful, or false if not.
@@ -2568,7 +2569,7 @@ function PaintWeb (win, doc) {
       return false;
     }
 
-    var extMap = {'jpg' : 'image/jpeg', 'jpeg' : 'image/jpeg', 'png' 
+    var extMap = {'jpg' : 'image/jpeg', 'jpeg' : 'image/jpeg', 'png'
       : 'image/png', 'gif' : 'image/gif'};
 
     // Detect the MIME type of the image currently loaded.
@@ -2585,8 +2586,8 @@ function PaintWeb (win, doc) {
       type = extMap[ext] || 'image/png';
     }
 
-    // We consider that other formats than PNG do not support transparencies.  
-    // Thus, we create a new Canvas element for which we set the configured 
+    // We consider that other formats than PNG do not support transparencies.
+    // Thus, we create a new Canvas element for which we set the configured
     // background color, and we render the image onto it.
     if (type !== 'image/png') {
       canvas = doc.createElement('canvas');
@@ -2603,7 +2604,7 @@ function PaintWeb (win, doc) {
     }
 
     try {
-      // canvas.toDataURL('image/jpeg', quality) fails in Gecko due to security 
+      // canvas.toDataURL('image/jpeg', quality) fails in Gecko due to security
       // concerns, uh-oh.
       if (type === 'image/jpeg' && !pwlib.browser.gecko) {
         idata = canvas.toDataURL(type, cfg.jpegSaveQuality);
@@ -2642,8 +2643,8 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * The <code>imageSaveResult</code> application event handler. This method 
-   * PaintWeb-related stuff: for example, the {@link PaintWeb.image.modified} 
+   * The <code>imageSaveResult</code> application event handler. This method
+   * PaintWeb-related stuff: for example, the {@link PaintWeb.image.modified}
    * flag is turned to false.
    *
    * @private
@@ -2659,10 +2660,10 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * Swap the fill and stroke styles. This is just like in Photoshop, if the 
+   * Swap the fill and stroke styles. This is just like in Photoshop, if the
    * user presses X, the fill/stroke colors are swapped.
    *
-   * <p>This method dispatches the {@link pwlib.appEvent.configChange} event 
+   * <p>This method dispatches the {@link pwlib.appEvent.configChange} event
    * twice for each color (strokeStyle and fillStyle).
    */
   this.swapFillStroke = function () {
@@ -2672,19 +2673,19 @@ function PaintWeb (win, doc) {
     _self.config.fillStyle   = strokeStyle;
     _self.config.strokeStyle = fillStyle;
 
-    var ev = new appEvent.configChange(strokeStyle, fillStyle, 'fillStyle', '', 
+    var ev = new appEvent.configChange(strokeStyle, fillStyle, 'fillStyle', '',
         _self.config);
 
     _self.events.dispatch(ev);
 
-    ev = new appEvent.configChange(fillStyle, strokeStyle, 'strokeStyle', '', 
+    ev = new appEvent.configChange(fillStyle, strokeStyle, 'strokeStyle', '',
         _self.config);
 
     _self.events.dispatch(ev);
   };
 
   /**
-   * Select all the pixels. This activates the selection tool, and selects the 
+   * Select all the pixels. This activates the selection tool, and selects the
    * entire image.
    *
    * @param {Event} [ev] The DOM Event object which generated the request.
@@ -2701,7 +2702,7 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * Cut the available selection. This only works when the selection tool is 
+   * Cut the available selection. This only works when the selection tool is
    * active and when some selection is available.
    *
    * @param {Event} [ev] The DOM Event object which generated the request.
@@ -2718,7 +2719,7 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * Copy the available selection. This only works when the selection tool is 
+   * Copy the available selection. This only works when the selection tool is
    * active and when some selection is available.
    *
    * @param {Event} [ev] The DOM Event object which generated the request.
@@ -2735,7 +2736,7 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * Paste the current clipboard image. This only works when some ImageData is 
+   * Paste the current clipboard image. This only works when some ImageData is
    * available in {@link PaintWeb#clipboard}.
    *
    * @param {Event} [ev] The DOM Event object which generated the request.
@@ -2752,8 +2753,8 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * The <code>configChange</code> application event handler. This method 
-   * updates the Canvas context properties depending on which configuration 
+   * The <code>configChange</code> application event handler. This method
+   * updates the Canvas context properties depending on which configuration
    * property changed.
    *
    * @private
@@ -2821,14 +2822,14 @@ function PaintWeb (win, doc) {
   };
 
   /**
-   * Destroy a PaintWeb instance. This method allows you to unload a PaintWeb 
-   * instance. Extensions, tools and commands are unregistered, and the GUI 
+   * Destroy a PaintWeb instance. This method allows you to unload a PaintWeb
+   * instance. Extensions, tools and commands are unregistered, and the GUI
    * elements are removed.
    *
-   * <p>The scripts and styles loaded are not removed, since they might be used 
+   * <p>The scripts and styles loaded are not removed, since they might be used
    * by other PaintWeb instances.
    *
-   * <p>The {@link pwlib.appEvent.appDestroy} application event is dispatched 
+   * <p>The {@link pwlib.appEvent.appDestroy} application event is dispatched
    * before the current instance is destroyed.
    */
   this.destroy = function () {
@@ -2884,7 +2885,7 @@ PaintWeb.INIT_DONE = 2;
 PaintWeb.INIT_ERROR = -1;
 
 /**
- * PaintWeb base folder. This is determined automatically when the PaintWeb 
+ * PaintWeb base folder. This is determined automatically when the PaintWeb
  * script is added in a page.
  * @type String
  */
